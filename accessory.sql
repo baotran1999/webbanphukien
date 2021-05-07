@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 07, 2021 at 05:40 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.2.34
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th5 07, 2021 lúc 07:02 PM
+-- Phiên bản máy phục vụ: 10.4.18-MariaDB
+-- Phiên bản PHP: 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `accessory`
+-- Cơ sở dữ liệu: `accessory`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `articles`
+-- Cấu trúc bảng cho bảng `articles`
 --
 
 CREATE TABLE `articles` (
@@ -36,10 +36,17 @@ CREATE TABLE `articles` (
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `articles`
+--
+
+INSERT INTO `articles` (`id`, `title`, `content`, `created_at`, `sort_order`, `updated_at`) VALUES
+(9, 'Khuyến mãi 50%', '<p><strong>Sắp đến mùa hè, khuyến mãi 50% các phụ kiện, nhanh tay lên nào.</strong></p>', '2021-05-07 09:34:24', 1, '2021-05-07 16:34:24');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `brands`
+-- Cấu trúc bảng cho bảng `brands`
 --
 
 CREATE TABLE `brands` (
@@ -52,7 +59,7 @@ CREATE TABLE `brands` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `brands`
+-- Đang đổ dữ liệu cho bảng `brands`
 --
 
 INSERT INTO `brands` (`id`, `name`, `img_path`, `status`, `created_at`, `updated_at`) VALUES
@@ -65,7 +72,7 @@ INSERT INTO `brands` (`id`, `name`, `img_path`, `status`, `created_at`, `updated
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categories`
+-- Cấu trúc bảng cho bảng `categories`
 --
 
 CREATE TABLE `categories` (
@@ -77,7 +84,7 @@ CREATE TABLE `categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `categories`
+-- Đang đổ dữ liệu cho bảng `categories`
 --
 
 INSERT INTO `categories` (`id`, `title`, `status`, `created_at`, `updated_at`) VALUES
@@ -90,7 +97,7 @@ INSERT INTO `categories` (`id`, `title`, `status`, `created_at`, `updated_at`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cities`
+-- Cấu trúc bảng cho bảng `cities`
 --
 
 CREATE TABLE `cities` (
@@ -100,7 +107,7 @@ CREATE TABLE `cities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
--- Dumping data for table `cities`
+-- Đang đổ dữ liệu cho bảng `cities`
 --
 
 INSERT INTO `cities` (`matp`, `name`, `type`) VALUES
@@ -171,7 +178,7 @@ INSERT INTO `cities` (`matp`, `name`, `type`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `contacts`
+-- Cấu trúc bảng cho bảng `contacts`
 --
 
 CREATE TABLE `contacts` (
@@ -181,13 +188,22 @@ CREATE TABLE `contacts` (
   `phone` varchar(10) NOT NULL,
   `title` text NOT NULL,
   `content` text NOT NULL,
-  `customer_id` bigint(20) NOT NULL
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `username` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `contacts`
+--
+
+INSERT INTO `contacts` (`id`, `address`, `email`, `phone`, `title`, `content`, `created_at`, `updated_at`, `username`) VALUES
+(1, '123', 'abc@gmail.com', '1212123121', '123', '123', '2021-05-07 09:52:32', '2021-05-07 16:52:32', 'abc');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customers`
+-- Cấu trúc bảng cho bảng `customers`
 --
 
 CREATE TABLE `customers` (
@@ -208,17 +224,17 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `customers`
+-- Đang đổ dữ liệu cho bảng `customers`
 --
 
 INSERT INTO `customers` (`id`, `username`, `password`, `email`, `phone`, `sex`, `city_id`, `district_id`, `ward_id`, `admin`, `created_at`, `updated_at`, `status`, `verify`) VALUES
-(12, 'hyquynh', '$2y$10$yZY4/UwcQqGUuWw3v39De.3rv2zW1AHmIh0RZwv4ilqeHD08Yn8ku', 'hyquynh123@gmail.com', '0123456789', 'female', '02', '028', '00862', 0, '2021-04-14 18:24:49', '2021-05-07 11:58:34', 1, 1),
-(13, 'luan123', '$2y$10$HrbfYWBBNhTaHpNy5jQvIO2C.BYPTcwv0pYj.wadDgadJZR0ZbLRG', 'nguyenhuuluan17@gmail.com', '0898103236', 'male', '02', '029', '00898', 0, '2021-05-05 08:30:24', '2021-05-06 02:14:24', 1, 1);
+(12, 'hyquynh', '$2y$10$yZY4/UwcQqGUuWw3v39De.3rv2zW1AHmIh0RZwv4ilqeHD08Yn8ku', 'hyquynh123@gmail.com', '0123456789', 'female', '02', '028', '00862', 0, '2021-04-14 18:24:49', '2021-05-07 16:32:19', 0, 1),
+(13, 'luan123', '$2y$10$UUcI27nJx3Tidg04CNJIAOAivStQezWc4G8yzsTfPoYeakZZ/.Oc6', 'nguyenhuuluan17@gmail.com', '0123456789', 'female', '12', '108', '03526', 0, '2021-05-05 08:30:24', '2021-05-07 16:33:23', 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `districts`
+-- Cấu trúc bảng cho bảng `districts`
 --
 
 CREATE TABLE `districts` (
@@ -229,7 +245,7 @@ CREATE TABLE `districts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `districts`
+-- Đang đổ dữ liệu cho bảng `districts`
 --
 
 INSERT INTO `districts` (`maqh`, `name`, `type`, `matp`) VALUES
@@ -867,7 +883,7 @@ INSERT INTO `districts` (`maqh`, `name`, `type`, `matp`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- Cấu trúc bảng cho bảng `orders`
 --
 
 CREATE TABLE `orders` (
@@ -885,18 +901,22 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `orders`
+-- Đang đổ dữ liệu cho bảng `orders`
 --
 
 INSERT INTO `orders` (`id`, `customer_id`, `total`, `status`, `updated_at`, `created_at`, `product_id`, `order_code`, `ship_id`, `qty`, `price`) VALUES
 (32, 12, 200000, 2, '2021-05-07 08:16:01', '2021-05-07 15:16:01', 7, 8452, 2, 1, 200000),
 (33, 12, 100000, 2, '2021-05-07 08:16:01', '2021-05-07 15:16:01', 6, 8452, 2, 1, 100000),
-(34, 12, 1800000, 2, '2021-05-07 08:31:17', '2021-05-07 15:31:17', 7, 13526, 2, 3, 600000);
+(34, 12, 1800000, 2, '2021-05-07 08:31:17', '2021-05-07 15:31:17', 7, 13526, 2, 3, 600000),
+(35, 13, 800000, 2, '2021-05-07 09:25:14', '2021-05-07 16:25:14', 7, 46739, 3, 2, 400000),
+(36, 13, 400000, 2, '2021-05-07 09:25:14', '2021-05-07 16:25:14', 6, 46739, 3, 2, 200000),
+(37, 13, 4000000, 2, '2021-05-07 09:25:14', '2021-05-07 16:25:14', 12, 46739, 3, 2, 2000000),
+(38, 13, 200000, 2, '2021-05-07 10:01:51', '2021-05-07 17:01:51', 7, 94378, 2, 1, 200000);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `producers`
+-- Cấu trúc bảng cho bảng `producers`
 --
 
 CREATE TABLE `producers` (
@@ -907,7 +927,7 @@ CREATE TABLE `producers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `producers`
+-- Đang đổ dữ liệu cho bảng `producers`
 --
 
 INSERT INTO `producers` (`id`, `name`, `created_at`, `updated_at`) VALUES
@@ -916,7 +936,7 @@ INSERT INTO `producers` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Cấu trúc bảng cho bảng `products`
 --
 
 CREATE TABLE `products` (
@@ -936,23 +956,23 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `products`
+-- Đang đổ dữ liệu cho bảng `products`
 --
 
 INSERT INTO `products` (`id`, `title`, `price`, `category_id`, `image_path`, `created_at`, `updated_at`, `producer_id`, `description`, `brand_id`, `quantity`, `status`, `sku`) VALUES
-(6, 'Tai nghe bluetooth', 100000, 2, 'Tai nghe bluetooth.webp', '2021-04-17 22:05:37', '2021-05-07 13:10:05', 1, '<p>abc</p>', 3, 99, 1, 'abc'),
-(7, 'Camera hành trình', 200000, 3, 'Camera hành trình.jpg', '2021-04-17 22:06:26', '2021-05-07 15:29:16', 1, '<p>123</p>', 4, 196, 1, '123'),
+(6, 'Tai nghe bluetooth', 100000, 2, 'Tai nghe bluetooth.webp', '2021-04-17 22:05:37', '2021-05-07 16:20:14', 1, '<p>abc</p>', 3, 97, 1, 'abc'),
+(7, 'Camera hành trình', 200000, 3, 'Camera hành trình.jpg', '2021-04-17 22:06:26', '2021-05-07 17:01:32', 1, '<p>123</p>', 4, 193, 1, '123'),
 (8, 'Apple airpod 2', 3500000, 3, 'Apple airpod 2.jpg', '2021-04-17 22:07:22', '2021-04-18 05:07:22', 1, '<p>123</p>', 6, 200, 1, 'abc'),
 (9, 'Sạc nhanh', 200000, 2, 'Sạc nhanh.jpg', '2021-04-17 22:08:13', '2021-04-18 05:08:13', 1, '<p>123</p>', 3, 200, 1, '123'),
 (10, 'Sạc nhanh 2', 200000, 3, 'Sạc nhanh 2.webp', '2021-04-17 22:08:42', '2021-04-18 05:08:42', 1, '<p>123</p>', 3, 100, 1, 'abc'),
 (11, 'Router wifi', 200000, 2, 'Router wifi.webp', '2021-04-17 22:09:14', '2021-04-18 05:09:14', 1, '<p>123</p>', 3, 2000, 1, '123'),
-(12, 'Máy chơi game', 1000000, 2, 'Máy chơi game.jpg', '2021-04-17 22:09:43', '2021-04-18 05:09:43', 1, '<p>123</p>', 3, 200, 1, '123'),
+(12, 'Máy chơi game', 1000000, 2, 'Máy chơi game.jpg', '2021-04-17 22:09:43', '2021-05-07 16:20:14', 1, '<p>123</p>', 3, 198, 1, '123'),
 (13, 'Camera 2', 200000, 2, 'Camera 2.jpg', '2021-04-17 22:10:17', '2021-04-18 05:10:17', 1, '<p>123</p>', 3, 123, 1, 'abc');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ships`
+-- Cấu trúc bảng cho bảng `ships`
 --
 
 CREATE TABLE `ships` (
@@ -964,16 +984,17 @@ CREATE TABLE `ships` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `ships`
+-- Đang đổ dữ liệu cho bảng `ships`
 --
 
 INSERT INTO `ships` (`id`, `name`, `price`, `created_at`, `updated_at`) VALUES
-(2, 'Viettel post', 30000, '2021-05-01 09:36:13', '2021-05-01 16:42:10');
+(2, 'Viettel post', 30000, '2021-05-01 09:36:13', '2021-05-01 16:42:10'),
+(3, 'Express', 20000, '2021-05-07 08:49:23', '2021-05-07 15:49:23');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `slides`
+-- Cấu trúc bảng cho bảng `slides`
 --
 
 CREATE TABLE `slides` (
@@ -987,7 +1008,7 @@ CREATE TABLE `slides` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `slides`
+-- Đang đổ dữ liệu cho bảng `slides`
 --
 
 INSERT INTO `slides` (`id`, `name`, `image_path`, `sort_order`, `created_at`, `updated_at`, `status`) VALUES
@@ -999,7 +1020,7 @@ INSERT INTO `slides` (`id`, `name`, `image_path`, `sort_order`, `created_at`, `u
 -- --------------------------------------------------------
 
 --
--- Table structure for table `wards`
+-- Cấu trúc bảng cho bảng `wards`
 --
 
 CREATE TABLE `wards` (
@@ -1010,7 +1031,7 @@ CREATE TABLE `wards` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `wards`
+-- Đang đổ dữ liệu cho bảng `wards`
 --
 
 INSERT INTO `wards` (`xaid`, `name`, `type`, `maqh`) VALUES
@@ -11638,42 +11659,41 @@ INSERT INTO `wards` (`xaid`, `name`, `type`, `maqh`) VALUES
 ('32248', 'Xã Đất Mũi', 'Xã', '973');
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `articles`
+-- Chỉ mục cho bảng `articles`
 --
 ALTER TABLE `articles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `brands`
+-- Chỉ mục cho bảng `brands`
 --
 ALTER TABLE `brands`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `categories`
+-- Chỉ mục cho bảng `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cities`
+-- Chỉ mục cho bảng `cities`
 --
 ALTER TABLE `cities`
   ADD PRIMARY KEY (`matp`);
 
 --
--- Indexes for table `contacts`
+-- Chỉ mục cho bảng `contacts`
 --
 ALTER TABLE `contacts`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_CustomerContact` (`customer_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `customers`
+-- Chỉ mục cho bảng `customers`
 --
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`),
@@ -11682,13 +11702,13 @@ ALTER TABLE `customers`
   ADD KEY `FK_WardCustomer` (`ward_id`);
 
 --
--- Indexes for table `districts`
+-- Chỉ mục cho bảng `districts`
 --
 ALTER TABLE `districts`
   ADD PRIMARY KEY (`maqh`);
 
 --
--- Indexes for table `orders`
+-- Chỉ mục cho bảng `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
@@ -11697,13 +11717,13 @@ ALTER TABLE `orders`
   ADD KEY `FK_ShipOrder` (`ship_id`);
 
 --
--- Indexes for table `producers`
+-- Chỉ mục cho bảng `producers`
 --
 ALTER TABLE `producers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `products`
+-- Chỉ mục cho bảng `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
@@ -11712,99 +11732,93 @@ ALTER TABLE `products`
   ADD KEY `FK_BrandProduct` (`brand_id`);
 
 --
--- Indexes for table `ships`
+-- Chỉ mục cho bảng `ships`
 --
 ALTER TABLE `ships`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `slides`
+-- Chỉ mục cho bảng `slides`
 --
 ALTER TABLE `slides`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `wards`
+-- Chỉ mục cho bảng `wards`
 --
 ALTER TABLE `wards`
   ADD PRIMARY KEY (`xaid`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `articles`
+-- AUTO_INCREMENT cho bảng `articles`
 --
 ALTER TABLE `articles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `brands`
+-- AUTO_INCREMENT cho bảng `brands`
 --
 ALTER TABLE `brands`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `categories`
+-- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `contacts`
+-- AUTO_INCREMENT cho bảng `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `customers`
+-- AUTO_INCREMENT cho bảng `customers`
 --
 ALTER TABLE `customers`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `orders`
+-- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
--- AUTO_INCREMENT for table `producers`
+-- AUTO_INCREMENT cho bảng `producers`
 --
 ALTER TABLE `producers`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `ships`
+-- AUTO_INCREMENT cho bảng `ships`
 --
 ALTER TABLE `ships`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `slides`
+-- AUTO_INCREMENT cho bảng `slides`
 --
 ALTER TABLE `slides`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `contacts`
---
-ALTER TABLE `contacts`
-  ADD CONSTRAINT `FK_CustomerContact` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
-
---
--- Constraints for table `customers`
+-- Các ràng buộc cho bảng `customers`
 --
 ALTER TABLE `customers`
   ADD CONSTRAINT `FK_CityCustomer` FOREIGN KEY (`city_id`) REFERENCES `cities` (`matp`),
@@ -11812,7 +11826,7 @@ ALTER TABLE `customers`
   ADD CONSTRAINT `FK_WardCustomer` FOREIGN KEY (`ward_id`) REFERENCES `wards` (`xaid`);
 
 --
--- Constraints for table `orders`
+-- Các ràng buộc cho bảng `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `FK_CustomerOrder` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
@@ -11820,7 +11834,7 @@ ALTER TABLE `orders`
   ADD CONSTRAINT `FK_ShipOrder` FOREIGN KEY (`ship_id`) REFERENCES `ships` (`id`);
 
 --
--- Constraints for table `products`
+-- Các ràng buộc cho bảng `products`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `FK_BrandProduct` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`),
