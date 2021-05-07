@@ -7,7 +7,14 @@ use App\Product;
 use App\Category;
 use App\Producer;
 use App\Brand;
+use App\Cart;
+use App\Ship;
+use App\Order;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ThankMail;
 
 class ProductController extends Controller
 {
@@ -89,7 +96,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
-        $randomProduct = Product::inRandomOrder()->limit(1)->get();
+        $randomProduct = Product::inRandomOrder()->limit(3)->get();
         return view('product-detail',['product'=>$product,'randomProduct'=>$randomProduct]);
     }
 
@@ -170,5 +177,147 @@ class ProductController extends Controller
         $product->status = 1;
         $product->save();
         return redirect()->route('product.list')->with("success","Mở thành công");
+    }
+
+    /**
+     * Add to cart
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addToCart(Request $request, $id)
+    {
+        if(Auth::check()){
+            $product = Product::find($id);
+            $oldCart = Session::has('cart') ? Session::get('cart') : null;
+            $cart = new Cart($oldCart);
+            $cart->add($product,$product->id);
+            $request->session()->put('cart',$cart);
+            return redirect()->route('product.detail',['id' => $product->id])->with('success','Thêm giỏ hàng thành công');
+        }else{
+            return redirect()->route('login')->with("invalid","Vui lòng đăng nhập trước khi mua hàng");
+        }
+    }  
+    
+    /**
+     * Show item in cart
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getCart(){
+        if(!Session::has('cart')){
+            return view('cart');
+        }
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+        return view('cart', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice]);
+    }
+
+    /**
+     * Delete item in cart
+     * 
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteItem($id){
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->deleteItem($id);
+        if(count($cart->items) > 0){
+            Session::put('cart',$cart);
+        }else{
+            Session::forget('cart');
+        }
+        return redirect()->route('cart');
+    }
+
+    /**
+     * Checkout
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function checkout(){
+        if(!Session::has('cart')){
+            return view('cart');
+        }
+        $oldCart = Session::get('cart');
+        $id = Session::get('customer')->id;
+        $ships = Ship::all();
+        $customer = DB::select(
+            'select u.*,c.name c_name,d.name d_name,w.name w_name 
+            from customers u,cities c,districts d,wards w 
+            where u.city_id = c.matp and u.district_id = d.maqh and u.ward_id = w.xaid and id = ?',[$id]
+        );
+        $cart = new Cart($oldCart);
+        return view('checkout', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice, 'customer' => $customer[0], 'ships' => $ships]);
+    }
+
+        /**
+     * Pay
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function pay(Request $request){
+        if(!Session::has('cart')){
+            return view('cart');
+        }
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+        $ran_id = substr(str_shuffle("0123456789"), 0, 5);
+        try {
+            foreach($cart->items as $row){
+                $order = new Order();
+                $order->customer_id = $request->input('customer_id');
+                $order->qty = $row['qty'];
+                $order->price = $row['price'];
+                $order->total = $row['qty'] * $row['price'];
+                $order->product_id = $row['item']['id'];
+                $order->order_code = $ran_id;
+                $order->ship_id = $request->input('ship');
+                $order->save();
+                $product = Product::find($row['item']['id']);
+                Product::where('id',$row['item']['id'])->update(['quantity' => $product['quantity'] - $row['qty']]);
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('checkout')->with('invalid', $e->getMessage());
+        }
+        Mail::to($request->input('email'))->send(new ThankMail());
+        Session::forget('cart');
+        return view('thank');
+    }
+
+    
+    /**
+     * Decrease item in cart
+     * 
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function decreaseItem($id){
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->decreaseItemByOne($id);
+        if(count($cart->items) > 0){
+            Session::put('cart',$cart);
+        }else{
+            Session::forget('cart');
+        }
+        return redirect()->route('cart');
+    }
+
+    /**
+     * Increase item in cart
+     * 
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function increaseItem($id){
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->increaseItemByOne($id);
+        Session::put('cart',$cart);
+        return redirect()->route('cart');
     }
 }

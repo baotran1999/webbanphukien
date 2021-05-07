@@ -22,6 +22,7 @@
                         <input type="text" class="form-control" placeholder="Nhập thứ tự xuất hiện" id="sort-order" name="sort-order" value='{{ $slide['sort_order'] }}'>
                     </div>
                     <button type="submit" class="btn btn-primary">Sửa</button>
+                    <a href="{{ route('slide.back') }}" type="button" class="btn btn-danger">Quay lại</a>
                   </form>
             </div>
         </div>

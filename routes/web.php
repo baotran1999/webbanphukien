@@ -16,9 +16,11 @@ use Illuminate\Support\Facades\Route;
 // Redirect to each page
 Route::get('/',['uses'=>'HomeController@index','as'=>'index']);
 
-Route::get('product/brand/{id}',['uses'=>'HomeController@show','as'=>'brand.product']);
+Route::get('product/brand/{id}',['uses'=>'BrandController@show','as'=>'brand.product']);
 
 Route::get('product/id/{id}',['uses'=>'ProductController@show','as'=>'product.detail']);
+
+Route::post('product/id/{id}',['uses'=>'ProductController@addToCart','as'=>'add.to.cart']);
 
 Route::get('product/category/{id}',['uses'=>'CategoryController@show','as'=>'product.category']);
 
@@ -46,9 +48,35 @@ Route::get('/verify/{mail}','VerifyMailController@verify');
 
 Route::get('account',['uses'=>'AccountController@index','as'=>'account']);
 
-Route::post('account',['uses'=>'AccountController@update','as'=>'handle.edit']);
+Route::get('account/id/{id}',['uses'=>'AccountController@update','as'=>'handle.edit']);
 
 Route::get('logout',['uses'=>'AccountController@logout','as'=>'logout']);
+
+Route::get('cart',['uses'=>'ProductController@getCart','as'=>'cart']);
+
+Route::get('delete/item/{id}',['uses'=>'ProductController@deleteItem','as'=>'delete.item']);
+
+Route::get('checkout',['uses'=>'ProductController@checkout','as'=>'checkout']);
+
+Route::get('decrease/{id}',['uses'=>'ProductController@decreaseItem','as'=>'decrease.item']);
+
+Route::get('increase/{id}',['uses'=>'ProductController@increaseItem','as'=>'increase.item']);
+
+Route::get('add',['uses'=>'ShipController@addShipPrice']);
+
+Route::post('pay',['uses'=>'ProductController@pay','as'=>'pay']);
+
+Route::get('resetpwd',['uses'=>'AccountController@resetPasswordForm','as'=>'resetpwdForm']);
+
+Route::post('resetpwd/id/{id}',['uses'=>'AccountController@resetPassword','as'=>'resetpwd']);
+
+Route::get('forgetpwd',['uses'=>'AccountController@forgetPasswordForm','as'=>'forgetpwdForm']);
+
+Route::post('forgetpwd',['uses'=>'AccountController@forgetPassword','as'=>'forgetpwd']);
+
+Route::get('/getpassword/{mail}','AccountController@getPasswordForm');
+
+Route::post('updatepwd',['uses'=>'AccountController@updatePassword','as'=>'updatepwd']);
 
 Route::get('/introduce', function () {
     return view('introduce');
@@ -58,15 +86,6 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
-
-Route::get('/resetpwd', function () {
-    return view('resetpwd');
-})->name('resetpwd');
-
-Route::get('/cart', function () {
-    return view('cart');
-})->name('cart');
-
 Route::get('/search', function () {
     return view('search');
 })->name('search');
@@ -74,7 +93,6 @@ Route::get('/search', function () {
 Route::get('/products', function () {
     return view('products');
 })->name('products');
-
 
 //Admin login
 Route::group(['prefix'=>'admin'],function(){
@@ -119,6 +137,10 @@ Route::group(['prefix'=>'admin'],function(){
         Route::get('disable/{id}',['uses'=>'SlideController@disable','as'=>'slide.disable']);
 
         Route::get('enable/{id}',['uses'=>'SlideController@enable','as'=>'slide.enable']);
+
+        Route::get('/back', function () {
+            return redirect()->route('slide.list');
+        })->name('slide.back');
     });
     // Article
     Route::group(['prefix'=>'article'],function(){
@@ -142,11 +164,9 @@ Route::group(['prefix'=>'admin'],function(){
 	Route::group(['prefix'=>'order'],function(){
         Route::get('list',['uses'=>'OrderController@index','as'=>'order.list']);
         
-        Route::get('edit/{id}',['uses'=>'OrderController@edit','as'=>'order.edit.form']);
+        Route::get('see/{code}',['uses'=>'OrderController@show','as'=>'order.see']);
 
-		Route::post('edit/{id}',['uses'=>'OrderController@update','as'=>'order.edit']);
-        
-        Route::get('delete/{id}',['uses'=>'OrderController@destroy','as'=>'order.delete']);
+        Route::post('edit/{code}',['uses'=>'OrderController@update','as'=>'order.edit']);
 
         Route::get('/back', function () {
             return redirect()->route('order.list');

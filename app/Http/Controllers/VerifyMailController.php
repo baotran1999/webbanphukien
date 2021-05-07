@@ -85,6 +85,12 @@ class VerifyMailController extends Controller
         //
     }
 
+    /**
+     * Verify email
+     *
+     * @param  string  $email
+     * @return \Illuminate\Http\Response
+     */
     public function verify($mail)
     {
         $customer = Customer::whereEmail($mail)->first();

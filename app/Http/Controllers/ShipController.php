@@ -101,4 +101,15 @@ class ShipController extends Controller
         $ship->delete();
         return redirect()->route('ship.list')->with("success","Xóa thành công");
     }
-}
+
+     /**
+     * Add ship price
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function addShipPrice()
+    {
+        $msg = Ship::find($_GET['ship']);
+        return response()->json($msg);
+    }
+}   

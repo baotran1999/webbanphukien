@@ -39,6 +39,18 @@
                     href="{{ route('products') }}" class="text-dark">Sản phẩm</a>
                 <i class="fas fa-angle-double-right"></i> <span class="introduce">Chi tiết sản
                     phẩm</span></small>
+            @if(Session::has('invalid'))
+                <div class="alert alert-danger alert-dismissible mt-2">
+                        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {{Session::get('invalid')}}
+                </div>
+            @endif
+            @if(Session::has('success'))
+                <div class="alert alert-success alert-dismissible mt-2">
+                        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {{Session::get('success')}}
+                </div>
+            @endif
             <div class="row mt-4 mb-3">
                 <div class="col-md-6 sp-large">
                     <a href=""><img src="{{ asset('storage/images/products/'.$product['image_path']) }}" alt="{{ $product['id'] }}"
@@ -50,32 +62,8 @@
                         <span class="price-new ng-binding">Giá: {{ number_format($product['price'],-3,',',',') }} VND</span>
                     </div>
                     <span class="product-code ng-binding d-block mb-2"><b>Mã SP:</b> {{ $product['sku'] }} </span>
-                    <form class="add-to-cart">
-                        <div class="product-detail-quantity">
-                            <input type="hidden" value="{{ $product['id'] }}" name="product_id">
-                            <h5>Số lượng:</h5>
-                            <div style="display: flex; flex-direction: row; ">
-                                <button type="button" class="quantity-btn" onclick="addQuantity(-1)" style="outline: none;">
-                                    <svg viewBox="0 0 409.6 409.6">
-                                        <g>
-                                            <g>
-                                                <path
-                                                    d="M392.533,187.733H17.067C7.641,187.733,0,195.374,0,204.8s7.641,17.067,17.067,17.067h375.467 c9.426,0,17.067-7.641,17.067-17.067S401.959,187.733,392.533,187.733z">
-                                                </path>
-                                            </g>
-                                        </g>
-                                    </svg>
-                                </button>
-                                <input id="product-detail-quantity-input" class="quantity-input" type="number" value="1" name="product_quantity">
-                                <button type="button" class="quantity-btn" onclick="addQuantity(1)" style="outline: none;">
-                                    <svg viewBox="0 0 426.66667 426.66667">
-                                        <path
-                                            d="m405.332031 192h-170.664062v-170.667969c0-11.773437-9.558594-21.332031-21.335938-21.332031-11.773437 0-21.332031 9.558594-21.332031 21.332031v170.667969h-170.667969c-11.773437 0-21.332031 9.558594-21.332031 21.332031 0 11.777344 9.558594 21.335938 21.332031 21.335938h170.667969v170.664062c0 11.777344 9.558594 21.335938 21.332031 21.335938 11.777344 0 21.335938-9.558594 21.335938-21.335938v-170.664062h170.664062c11.777344 0 21.335938-9.558594 21.335938-21.335938 0-11.773437-9.558594-21.332031-21.335938-21.332031zm0 0">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
+                    <form class="add-to-cart" method="POST" action="{{ route('add.to.cart',['id' => $product['id']]) }}">
+                        @csrf
                         <div class="btn-buy mt-4">
                             <button type="submit" class="btn btn-danger btn-add-to-cart">
                                 <i class="fas fa-shopping-cart"></i>Thêm vào giỏ hàng</button>
@@ -95,8 +83,8 @@
                 <div class="heading-lg">
                     <h1>SẢN PHẨM HOT</h1>
                 </div>
-                @foreach ($randomProduct as $item)
                     <div class="row">
+                        @foreach ($randomProduct as $item)
                         <div class="col-3 mt-3">
                             <div class="card">
                                 <div class="card-image">
@@ -115,16 +103,9 @@
                             <div class="price text-center">
                                 <span class="price-new">{{ number_format($item['price'],-3,',',',') }} VND</span>
                             </div>
-                            <form class="add-to-cart" action="" method="POST">
-                                <div class="col text-center">
-                                    <input type="hidden" name="product_id" value="{{ $item['id'] }}" />
-                                    <input type="hidden" name="product_quantity" value="1" />
-                                    <button type="submit" class="buy" name="buy"><i class="fas fa-shopping-cart"></i> Mua</button>
-                                </div>
-                            </form>
                         </div>
+                        @endforeach
                     </div>
-                @endforeach
         </div>
     </div>
 </div>

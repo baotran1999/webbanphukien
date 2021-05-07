@@ -18,8 +18,8 @@ class HomeController extends Controller
         $slides = DB::table('slides')->where('status','=',1)->orderBy('sort_order')->get();
         $slideFirst = DB::table('slides')->where('status','=',1)->first();
         $specialBrand = DB::table('brands')->where('status','=',1)->limit(3)->get();
-        $brands = DB::table('brands')->where('status','=',1)->get();
-        $products = DB::table('products')->where('status','=',1)->paginate(12);
+        $brands = DB::table('brands')->where('status','=',1)->paginate(4,['*'],'brand');;
+        $products = DB::table('products')->where('status','=',1)->paginate(12,['*'],'product');
         return view('index',
         [
             'slides' => $slides,

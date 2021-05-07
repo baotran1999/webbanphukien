@@ -90,12 +90,23 @@ $(document).ready(function () {
             $('#product-container').html(html);
         });
     });
+    // Add ship price
+    $('#ship').change(function(e){
+        var ship = $(this).val();
+        var token = $("input[name='_token']").val();
+        $.ajax({
+            url: "/add",
+            type: 'GET',
+            data: {
+                ship:ship,
+                _token: token
+            },
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            }
+        }).done(function(res){
+            var total = (parseInt($('.sum').val()) + parseInt(res.price)).toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+            $('.total-cart').html("<b>"+total+"</b>");
+        });
+    });
 });
-function addQuantity(quan) {
-    let sum = parseInt($("#product-detail-quantity-input").val()) + parseInt(quan);
-    if (sum < 1) {
-        $("#product-detail-quantity-input").val(1);
-    } else {
-        $("#product-detail-quantity-input").val(sum);
-    }
-}

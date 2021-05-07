@@ -9,28 +9,51 @@
                     <h1 class="page-header">Đơn hàng
                         <small>Danh sách</small>
                     </h1>
+                    @if(Session::has('invalid'))
+                    <div class="alert alert-danger alert-dismissible">
+                         <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                         {{Session::get('invalid')}}
+                    </div>
+                    @endif
+                    @if(Session::has('success'))
+                            <div class="alert alert-success alert-dismissible">
+                                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                {{Session::get('success')}}
+                            </div>
+                    @endif
                 </div>
                 <!-- /.col-lg-12 -->
                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                     <thead>
                         <tr align="center">
-                            <th>Số thứ tự</th>
-                            <th>Khách hàng</th>
-                            <th>Mã khuyến mãi</th>
-                            <th>Thành tiền</th>
-                            <th>Trang thái</th>
-                            <th>Sản phẩm</th>
                             <th>Mã đơn hàng</th>
+                            <th>Khách hàng</th>
+                            <th>Tổng tiền</th>
+                            <th>Đơn vị giao hàng</th>
+                            <th>Trạng thái</th>
                             <th>Chức năng</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($orders as $order)
+                        @foreach ($orders as $row)
                             <tr>
+                                <td>{{ $row->order_code }}</td>
+                                <td>{{ $row->username }}</td>
+                                <td>{{ $row->total_money }}</td>
+                                <td>{{ $row->name }}</td>
                                 <td>
-                                    <a href="{{ route('order.delete',['id' => $order['id']]) }}"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                    <a href="{{ route('order.cancle',['id' => $order['id']]) }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                    <a href="{{ route('order.complete',['id' => $order['id']]) }}"><i class="fa fa-money" aria-hidden="true"></i></a>
+                                    @if ($row->status === 0)
+                                        {{ 'Chờ xác nhận' }}
+                                    @elseif ($row->status === 1)
+                                        {{ 'Xác nhận' }}
+                                    @elseif ($row->status === 2)
+                                        {{ 'Hoàn thành' }}
+                                    @elseif ($row->status === 3)
+                                        {{ 'Hủy' }}
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('order.see',['code' => $row->order_code]) }}"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                         @endforeach

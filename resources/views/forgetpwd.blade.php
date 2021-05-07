@@ -1,6 +1,6 @@
 @extends('layouts.template')
 
-@section('title','Đổi mật khẩu')
+@section('title','Lấy lại mật khẩu')
 
 @section('content')
 <div class="container">
@@ -33,7 +33,7 @@
                         </a>
                    </li>
                    <li>
-                        <a href="{{ route('resetpwdForm') }}">
+                        <a href="{{ route('forgetpwdForm') }}">
                              <i class="fas fa-sign-in-alt"></i>
                              Quên mật khẩu
                         </a>
@@ -44,23 +44,29 @@
               <div class="heading-lg">
                    <h1>LẤY LẠI MẬT KHẨU</h1>
               </div>
-              <form class="form-horizontal mt-4" method="POST" action="{{ route('resetpwd',['id' => Session::get('customer')->id]) }}">
+              @if(Session::has('success'))
+                    <div class="alert alert-success alert-dismissible mt-2">
+                         <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                         {{Session::get('success')}}
+                    </div>
+               @endif
+               @if(Session::has('invalid'))
+                    <div class="alert alert-danger alert-dismissible mt-2">
+                         <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                         {{Session::get('invalid')}}
+                    </div>
+               @endif
+              <form class="form-horizontal mt-4" method="POST" action="{{ route('forgetpwd') }}">
                    @csrf
                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="password">Mật khẩu:</label>
+                        <label class="control-label col-sm-2" for="email">Email:</label>
                         <div class="col-sm-10">
-                             <input type="password" class="form-control" name="password" id="password" placeholder="Nhập mật khẩu">
-                        </div>
-                   </div>
-                   <div class="form-group">
-                        <label class="control-label col-sm-2" for="repeatpassword">Nhập lại mật khẩu</label>
-                        <div class="col-sm-10">
-                             <input type="password" class="form-control" id="repeatpassword" name="repeatpassword" placeholder="Nhập lại mật khẩu">
+                             <input type="email" class="form-control" name="email" id="email" placeholder="Nhập email">
                         </div>
                    </div>
                    <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                             <button type="submit" class="btn-login">Đổi mật khẩu</button>
+                             <button type="submit" class="btn-login">Xác nhận mail</button>
                         </div>
                    </div>
               </form>

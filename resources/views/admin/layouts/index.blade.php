@@ -36,7 +36,7 @@
 
     </div>
     <!-- /#wrapper -->  
-
+    <input type="hidden" id="data" value="{{ json_encode($data) }}" />
     <!-- jQuery -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -61,22 +61,18 @@
     <script src="admin_asset/ckeditor/ckeditor.js"></script>
     <script>CKEDITOR.replace('content')</script>
     <script type="text/javascript">
+      var arr = [['Ngày', 'Doanh thu']];
+      var orders = JSON.parse(document.getElementById("data").value);
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
-
+      for(x of orders){
+        arr.push([x.order_day,x.total_price])
+      }  
       function drawChart() {
-
-        var data = google.visualization.arrayToDataTable([
-          ['Day', 'Revenue'],
-          ['10/4/2021',     1000000],
-          ['11/4/2021',      2000000],
-          ['12/4/2021',  4000000],
-          ['13/4/2021', 5000000],
-          ['14/4/2021',    6000000]
-        ]);
+        var data = google.visualization.arrayToDataTable(arr);
 
         var options = {
-          title: 'Doanh thu tháng này'
+          title: 'Thống kê doanh thu các ngày trong tháng'
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -84,6 +80,11 @@
         chart.draw(data, options);
       }
     </script>
+    <script>
+      $('#confirm-delete').on('show.bs.modal', function(e) {
+          $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+      });
+  </script>
 </body>
 
 </html>

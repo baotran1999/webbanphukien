@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class VerifyMail extends Mailable
+class GetPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -28,6 +28,6 @@ class VerifyMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Xác thực mail')->view('verify-mail')->with('data',$this->data);
+        return $this->subject('Lấy lại mật khẩu')->view('getpassword-mail')->with('data',$this->data);
     }
 }

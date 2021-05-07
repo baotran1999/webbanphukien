@@ -11,6 +11,6 @@ class Order extends Model
      *
      * @var array
      */
-    protected $fillable = ['customer_id','promotion_id','total','product_id','order_code','status'];
+    protected $fillable = ['customer_id','promotion_id','total','product_id','order_code','status','qty','price'];
     protected $table = "orders";
 }

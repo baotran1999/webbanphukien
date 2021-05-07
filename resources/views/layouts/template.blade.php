@@ -60,7 +60,9 @@
             <div class="cart">
                 <a href="{{ route('cart') }}" class="text-dark cart-child">
                     <img src="{{asset('assets/img/cart/cart.png')}}" alt="cart" />
-                    <span id="cart-total" class="cart-total ml-2 mr-2 mt-2"></span>
+                    <span id="cart-total" class="cart-total ml-2 mr-2 mt-2">
+						{{ Session::has('cart') ? Session::get('cart')->totalQty : '' }}
+					</span>
                     <i class="fa fa-arrow-right mt-2"></i>
                 </a>
             </div>
@@ -118,21 +120,21 @@
 					<div class="col-lg-3">
 						<h6>GIỚI THIỆU</h6>
 						<div class="items">
-							<a href=""><i class="fas fa-angle-double-right"></i> Về chúng tôi</a>
-							<a href=""><i class="fas fa-angle-double-right"></i> Lĩnh vực hoạt động</a>
-							<a href=""><i class="fas fa-angle-double-right"></i> Hỏi đáp</a>
-							<a href=""><i class="fas fa-angle-double-right"></i> Quy chế hoạt động</a>
-							<a href=""><i class="fas fa-angle-double-right"></i> Tuyển dụng</a>
+							<div><i class="fas fa-angle-double-right"></i> Về chúng tôi</div>
+							<div><i class="fas fa-angle-double-right"></i> Lĩnh vực hoạt động</div>
+							<div><i class="fas fa-angle-double-right"></i> Hỏi đáp</div>
+							<div><i class="fas fa-angle-double-right"></i> Quy chế hoạt động</div>
+							<div><i class="fas fa-angle-double-right"></i> Tuyển dụng</div>
 						</div>
 					</div>
 					<div class="col-lg-3">
 						<h6>TRỢ GIÚP</h6>
 						<div class="items">
-							<a href=""><i class="fas fa-angle-double-right"></i> Hướng dẫn thanh toán</a>
-							<a href=""><i class="fas fa-angle-double-right"></i> Quy định đổi trả</a>
-							<a href=""><i class="fas fa-angle-double-right"></i> Quy định thảo luận</a>
-							<a href=""><i class="fas fa-angle-double-right"></i> Chính sức bảo mật</a>
-							<a href=""><i class="fas fa-angle-double-right"></i> Chính sách bán hàng</a>
+							<div><i class="fas fa-angle-double-right"></i> Hướng dẫn thanh toán</div>
+							<div><i class="fas fa-angle-double-right"></i> Quy định đổi trả</div>
+							<div><i class="fas fa-angle-double-right"></i> Quy định thảo luận</div>
+							<div><i class="fas fa-angle-double-right"></i> Chính sức bảo mật</div>
+							<div><i class="fas fa-angle-double-right"></i> Chính sách bán hàng</div>
 						</div>
 					</div>
 					<div class="col-lg-3">
@@ -145,10 +147,10 @@
 					<div class="col-lg-3">
 						<h6>LIÊN HỆ</h6>
 						<div class="contact">
-							<div class="google"><a href=""><i class="fab fa-google-plus-g"></i></a></div>
-							<div class="facebook"><a href=""><i class="fab fa-facebook-square"></i></a></div>
-							<div class="youtube"><a href=""><i class="fab fa-youtube"></i></a></div>
-							<div class="skype"><a href=""><i class="fab fa-skype"></i></a></div>
+							<div class="google"><i class="fab fa-google-plus-g"></i></div>
+							<div class="facebook"><i class="fab fa-facebook-square"></i></div>
+							<div class="youtube"><i class="fab fa-youtube"></i></div>
+							<div class="skype"><i class="fab fa-skype"></i></div>
 						</div>
 					</div>
 				</div>

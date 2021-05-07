@@ -70,6 +70,7 @@
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Sửa</button>
+                    <a href="{{ route('product.back') }}" type="button" class="btn btn-danger">Quay lại</a>
                   </form>
             </div>
         </div>

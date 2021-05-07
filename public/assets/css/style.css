@@ -212,19 +212,19 @@ li.nav-item > a:hover {
     font-size: 2rem;
 }
 
-.google > a {
+.google > i {
     color: #dd4b39;
 }
 
-.facebook > a {
+.facebook > i {
     color: #3b5998;
 }
 
-.youtube > a {
+.youtube > i {
     color: red;
 }
 
-.skype > a {
+.skype > i {
     color: #6db7ef;
 }
 

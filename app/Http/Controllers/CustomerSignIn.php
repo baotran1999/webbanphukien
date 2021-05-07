@@ -52,8 +52,8 @@ class CustomerSignIn extends Controller
             }
             return redirect()->route('dashboard')->with('success','Đăng nhập thành công vào admin.');
         }
-        elseif(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])){
-            $customer = Customer::where([['email','=',$request->input('email')],['verify','=',1]])->first();
+        if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])){
+            $customer = Customer::where([['email','=',$request->input('email')],['verify','=',1],['status','=',1]])->first();
             if(!empty($customer->id)){
                 if(Session::has('customer')){
                     Session::forget('customer');
@@ -63,7 +63,7 @@ class CustomerSignIn extends Controller
                 }
                 return redirect()->route('account')->with('success','Đăng nhập thành công.');
             }else{
-                return redirect()->route('login')->with("invalid","Vui lòng xác thực tài khoản trước khi đăng nhập !");
+                return redirect()->route('login')->with("invalid","Tài khoản chưa hoặc đã bị khóa, vui lòng đăng nhập lại.");
             }
         }
         else{

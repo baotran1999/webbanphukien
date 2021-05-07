@@ -20,27 +20,18 @@
             <div class="row ml-4">
                 @foreach ($products as $product)
                     <div class="col-lg-3 mb-4">
-                        <form action="" method="POST">
-                            @csrf
-                            <div class="product-item-box">
-                                <div class="product-item">
-                                    <div class="image">
-                                        <a href="{{ route('product.detail',['id' => $product->id]) }}">
-                                            <img src="{{ asset('storage/images/products/'.$product->image_path) }}" alt="{{ $product->id }}" width="100%" height="100%" name="product-image" class="product-image" />
-                                        </a>
-                                        <a href="{{ route('product.detail',['id' => $product->id]) }}" class="more-info"><i class="fas fa-search"></i> XEM THÊM</a>
-                                    </div>
-                                    <a href="{{ route('product.detail',['id' => $product->id]) }}" class="product-name mt-4">{{ $product->title }}</a>
-                                    <div class="price-new" name="price-new">{{ number_format($product->price,-3,',',',') }} VND</div>
+                        <div class="product-item-box">
+                            <div class="product-item">
+                                <div class="image">
+                                    <a href="{{ route('product.detail',['id' => $product->id]) }}">
+                                        <img src="{{ asset('storage/images/products/'.$product->image_path) }}" alt="{{ $product->id }}" width="100%" height="100%" name="product-image" class="product-image" />
+                                    </a>
+                                    <a href="{{ route('product.detail',['id' => $product->id]) }}" class="more-info"><i class="fas fa-search"></i> XEM THÊM</a>
                                 </div>
+                                <a href="{{ route('product.detail',['id' => $product->id]) }}" class="product-name mt-4">{{ $product->title }}</a>
+                                <div class="price-new" name="price-new">{{ number_format($product->price,-3,',',',') }} VND</div>
                             </div>
-                            <input type="hidden" name="product_id" value="{{ $product->id }}" />
-                            <input type="hidden" name="quantity" value="1" />
-                            <div class="col text-center">
-                                <button type="submit" class="buy" name="buy"><i class="fas fa-shopping-cart"></i>
-                                    Mua</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 @endforeach
             </div>

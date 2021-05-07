@@ -64,6 +64,7 @@
             </div>           
         @endforeach
     </div>
+    {{ $brands->links() }}
     <h4>Sản phẩm</h4>
     <div class="text-right mb-3">
         <span>Sắp xếp </span><select class="form-select" id="form-select-filter">
@@ -91,9 +92,7 @@
             </div>
         @endforeach
     </div>
-    @if (count($products) >= 12)
-        {{ $products->links() }}
-    @endif
+    {{ $products->links() }}
     <div class="row mb-4">
         <div class="col-lg-3">
             <div class="sale-policy-block">

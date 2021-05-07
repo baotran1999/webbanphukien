@@ -41,7 +41,20 @@
                             <td>{{ $article['content'] }}</td>
                             <td>{{ $article['sort_order'] }}</td>
                             <td>
-                                <a href="{{ route('article.delete',['id'=>$article['id']]) }}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                <a data-href="{{ route('article.delete',['id'=>$article['id']]) }}" data-target="#confirm-delete" data-toggle="modal"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                Bạn có chắc chắn sẽ muốn xóa bài viết này ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="btn btn-danger btn-ok">Xóa</a>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <a href="{{ route('article.edit.form',['id'=>$article['id']]) }}" style="margin:0 1rem;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                             </td>
                         </tr>
