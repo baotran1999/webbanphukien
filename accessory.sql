@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2021 at 04:19 PM
+-- Generation Time: May 07, 2021 at 05:40 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -36,13 +36,6 @@ CREATE TABLE `articles` (
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `articles`
---
-
-INSERT INTO `articles` (`id`, `title`, `content`, `created_at`, `sort_order`, `updated_at`) VALUES
-(8, 'abc', '<p>abc</p>', '2021-04-12 18:46:30', 1, '2021-04-13 01:46:30');
-
 -- --------------------------------------------------------
 
 --
@@ -67,7 +60,7 @@ INSERT INTO `brands` (`id`, `name`, `img_path`, `status`, `created_at`, `updated
 (4, 'Oppo', 'Oppo.jpg', 1, '2021-04-12 00:13:51', '2021-04-12 07:13:51'),
 (5, 'Samsung', 'Samsung.jpg', 1, '2021-04-13 01:08:03', '2021-04-13 08:08:03'),
 (6, 'Lenovo', 'Lenovo.jpg', 1, '2021-04-13 01:08:29', '2021-04-13 08:08:29'),
-(10, 'Hãng 123', 'Hãng điện thoại.jpg', 0, '2021-04-30 07:38:48', '2021-04-30 14:39:26');
+(10, 'Hãng 123', 'Hãng điện thoại.jpg', 1, '2021-04-30 07:38:48', '2021-05-04 13:54:44');
 
 -- --------------------------------------------------------
 
@@ -219,7 +212,8 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `username`, `password`, `email`, `phone`, `sex`, `city_id`, `district_id`, `ward_id`, `admin`, `created_at`, `updated_at`, `status`, `verify`) VALUES
-(12, 'hyquynh', '$2y$10$sRvQ8O.joI9ppr2FcJz5Ru4V5qMe0GaDwQgaYeuEQg9oTPFV5bl6G', 'hyquynh123@gmail.com', '0123456789', 'female', '02', '028', '00862', 0, '2021-04-14 18:24:49', '2021-04-15 01:58:21', 1, 1);
+(12, 'hyquynh', '$2y$10$yZY4/UwcQqGUuWw3v39De.3rv2zW1AHmIh0RZwv4ilqeHD08Yn8ku', 'hyquynh123@gmail.com', '0123456789', 'female', '02', '028', '00862', 0, '2021-04-14 18:24:49', '2021-05-07 11:58:34', 1, 1),
+(13, 'luan123', '$2y$10$HrbfYWBBNhTaHpNy5jQvIO2C.BYPTcwv0pYj.wadDgadJZR0ZbLRG', 'nguyenhuuluan17@gmail.com', '0898103236', 'male', '02', '029', '00898', 0, '2021-05-05 08:30:24', '2021-05-06 02:14:24', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -885,8 +879,19 @@ CREATE TABLE `orders` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `product_id` bigint(20) NOT NULL,
   `order_code` bigint(10) NOT NULL,
-  `ship_id` bigint(20) NOT NULL
+  `ship_id` bigint(20) NOT NULL,
+  `qty` int(11) NOT NULL,
+  `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `customer_id`, `total`, `status`, `updated_at`, `created_at`, `product_id`, `order_code`, `ship_id`, `qty`, `price`) VALUES
+(32, 12, 200000, 2, '2021-05-07 08:16:01', '2021-05-07 15:16:01', 7, 8452, 2, 1, 200000),
+(33, 12, 100000, 2, '2021-05-07 08:16:01', '2021-05-07 15:16:01', 6, 8452, 2, 1, 100000),
+(34, 12, 1800000, 2, '2021-05-07 08:31:17', '2021-05-07 15:31:17', 7, 13526, 2, 3, 600000);
 
 -- --------------------------------------------------------
 
@@ -935,8 +940,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `title`, `price`, `category_id`, `image_path`, `created_at`, `updated_at`, `producer_id`, `description`, `brand_id`, `quantity`, `status`, `sku`) VALUES
-(6, 'Tai nghe bluetooth', 100000, 2, 'Tai nghe bluetooth.webp', '2021-04-17 22:05:37', '2021-04-30 14:57:46', 1, '<p>abc</p>', 3, 100, 1, 'abc'),
-(7, 'Camera hành trình', 200000, 3, 'Camera hành trình.jpg', '2021-04-17 22:06:26', '2021-04-18 05:06:26', 1, '<p>123</p>', 4, 200, 1, '123'),
+(6, 'Tai nghe bluetooth', 100000, 2, 'Tai nghe bluetooth.webp', '2021-04-17 22:05:37', '2021-05-07 13:10:05', 1, '<p>abc</p>', 3, 99, 1, 'abc'),
+(7, 'Camera hành trình', 200000, 3, 'Camera hành trình.jpg', '2021-04-17 22:06:26', '2021-05-07 15:29:16', 1, '<p>123</p>', 4, 196, 1, '123'),
 (8, 'Apple airpod 2', 3500000, 3, 'Apple airpod 2.jpg', '2021-04-17 22:07:22', '2021-04-18 05:07:22', 1, '<p>123</p>', 6, 200, 1, 'abc'),
 (9, 'Sạc nhanh', 200000, 2, 'Sạc nhanh.jpg', '2021-04-17 22:08:13', '2021-04-18 05:08:13', 1, '<p>123</p>', 3, 200, 1, '123'),
 (10, 'Sạc nhanh 2', 200000, 3, 'Sạc nhanh 2.webp', '2021-04-17 22:08:42', '2021-04-18 05:08:42', 1, '<p>123</p>', 3, 100, 1, 'abc'),
@@ -986,10 +991,10 @@ CREATE TABLE `slides` (
 --
 
 INSERT INTO `slides` (`id`, `name`, `image_path`, `sort_order`, `created_at`, `updated_at`, `status`) VALUES
-(1, 'Slide 1', 'Slide 1.webp', 1, '2021-04-12 01:51:17', '2021-04-30 14:47:07', 0),
+(1, 'Slide 1', 'Slide 1.webp', 1, '2021-04-12 01:51:17', '2021-05-04 12:39:59', 1),
 (2, 'Slide 2', 'Slide 2.webp', 3, '2021-04-12 21:06:15', '2021-04-14 02:54:51', 1),
 (3, 'Slide 3', 'Slide 3.webp', 2, '2021-04-12 21:06:30', '2021-04-13 04:06:30', 1),
-(4, 'Sale 50%', 'Sale 50%.jpg', 1, '2021-04-30 07:46:54', '2021-04-30 14:46:54', 1);
+(7, 'Slide 4', 'Slide 4.webp', 4, '2021-05-04 05:45:57', '2021-05-04 12:45:57', 1);
 
 -- --------------------------------------------------------
 
@@ -11756,13 +11761,13 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `producers`
@@ -11786,7 +11791,7 @@ ALTER TABLE `ships`
 -- AUTO_INCREMENT for table `slides`
 --
 ALTER TABLE `slides`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
