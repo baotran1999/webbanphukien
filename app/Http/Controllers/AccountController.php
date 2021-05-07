@@ -138,6 +138,7 @@ class AccountController extends Controller
             $customer->save();
             return redirect()->route('account')->with('success','Cập nhật mật khẩu thành công.');
         }
+        return redirect()->back()->with('invalid','Mật khẩu và mật khẩu nhập lại không trùng khớp.');
     }
 
     /**

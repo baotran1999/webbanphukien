@@ -63,7 +63,7 @@ class CustomerSignIn extends Controller
                 }
                 return redirect()->route('account')->with('success','Đăng nhập thành công.');
             }else{
-                return redirect()->route('login')->with("invalid","Tài khoản chưa hoặc đã bị khóa, vui lòng đăng nhập lại.");
+                return redirect()->route('login')->with("invalid","Tài khoản chưa xác thực hoặc đã bị khóa, vui lòng đăng nhập lại.");
             }
         }
         else{

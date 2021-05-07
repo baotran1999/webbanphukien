@@ -21,6 +21,12 @@
         <hr />
         <div class="row">
             <div class="col-lg-12">
+                @if(Session::has('success'))
+                    <div class="alert alert-success alert-dismissible mt-2">
+                         <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                         {{Session::get('success')}}
+                    </div>
+               @endif
                 <h6 class="mt-4"><span>GỬI THÔNG TIN LIÊN HỆ</span></h6>
                 <small class="d-block mb-3">
                     <p>Xin vui lòng điền các yêu cầu vào mẫu dưới đây và gửi cho chúng tôi. Chúng tôi sẽ trả
@@ -28,40 +34,41 @@
                 </small>
             </div>
             <div class="col-lg-6 mb-5">
-                <form action="" method="GET">
+                <form action="{{ route('add.contact') }}" method="GET">
                     <div class="input-group mb-3 input-group-sm">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user-friends"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Họ tên" id="username" name="username">
+                        <input type="text" class="form-control" placeholder="Họ tên" id="username" name="username" required>
                     </div>
                     <div class="input-group mb-3 input-group-sm">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Địa chỉ" id="address" name="address">
+                        <input type="text" class="form-control" placeholder="Địa chỉ" id="address" name="address" required>
                     </div>
                     <div class="input-group mb-3 input-group-sm">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-envelope-open"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Email" id="email" name="email">
+                        <input type="email" class="form-control" placeholder="Email" id="email" name="email" required>
                     </div>
                     <div class="input-group mb-3 input-group-sm">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Điện thoại" id="phone" name="phone">
+                        <input type="tel" class="form-control" placeholder="Điện thoại" id="phone" pattern="[0-9]{10}" name="phone" required>
                     </div>
                     <div class="input-group mb-3 input-group-sm">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-pager"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Tiêu đề" id="title" name="title    ">
+                        <input type="text" class="form-control" placeholder="Tiêu đề" id="title" name="title" required>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" rows="3" placeholder="Nội dung" id="comment"></textarea>
+                        <textarea class="form-control" rows="3" placeholder="Nội dung" id="comment" name="comment" required></textarea>
                     </div>
+                    <input type="submit" name="submit" value="Gửi" class="btn btn-primary" />
                 </form>
             </div>
             <div class="col-lg-6">

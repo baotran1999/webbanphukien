@@ -75,7 +75,7 @@ $(document).ready(function () {
               xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             }
         }).done(function(res){  
-            var imgSrc = "https://webdienthoai.lc/storage/images/products/";
+            var imgSrc = "http://127.0.0.1:8000/storage/images/products/";
             var html = '';
             if(res.data.length > 0){
                 for(let x of res.data){

@@ -26,12 +26,6 @@
                                    Thông tin tài khoản
                               </a>
                          </li>
-                         <li href="">
-                              <a href="{{  route('register') }}">
-                                   <i class="fas fa-sign-in-alt"></i>
-                                   Đơn hàng của tôi
-                              </a>
-                         </li>
                          <li>
                               <a href="{{ route('resetpwdForm') }}">
                                    <i class="fas fa-sign-in-alt"></i>

@@ -6,9 +6,21 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">User
-                    <small>List</small>
+                <h1 class="page-header">Khách hàng
+                    <small>Danh sách</small>
                 </h1>
+                @if(Session::has('invalid'))
+                <div class="alert alert-danger alert-dismissible">
+                     <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                     {{Session::get('invalid')}}
+                </div>
+                @endif
+                @if(Session::has('success'))
+                        <div class="alert alert-success alert-dismissible">
+                            <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{Session::get('success')}}
+                        </div>
+                @endif
             </div>
             <!-- /.col-lg-12 -->
             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -37,10 +49,10 @@
                                 <td>{{ $customer['city_id'] }}</td>
                                 <td>{{ $customer['district_id'] }}</td>
                                 <td>{{ $customer['ward_id'] }}</td>
-                                <td>{{ $customer['status'] }}</td>
-                                <td><a href="{{ route('customer.delete',['id'=>$customer['id']]) }}"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                                <td>{{ $customer['status'] === 1 ? "Đang hoạt động":"Vô hiệu hóa" }}</td>
+                                <td><a href="{{ route('customer.delete',['id'=>$customer['id']]) }}"><i class="fa fa-times" aria-hidden="true"></i></a>
                                 <a href="{{ route('customer.disable',['id'=>$customer['id']]) }}" style="margin-right:1rem;"><i class="fa fa-ban" aria-hidden="true"></i></a>
-                                <a href="{{ route('customer.enable',['id'=>$customer['id']]) }}"><i class="fa fa-check-square" aria-hidden="true"></i>customer
+                                <a href="{{ route('customer.enable',['id'=>$customer['id']]) }}"><i class="fa fa-check-square" aria-hidden="true"></i></td>
                             </tr>
                         @endforeach
                 </tbody>

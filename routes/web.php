@@ -78,6 +78,8 @@ Route::get('/getpassword/{mail}','AccountController@getPasswordForm');
 
 Route::post('updatepwd',['uses'=>'AccountController@updatePassword','as'=>'updatepwd']);
 
+Route::get('addcontact',['uses'=>'ContactController@store','as'=>'add.contact']);
+
 Route::get('/introduce', function () {
     return view('introduce');
 })->name('introduce');
@@ -171,6 +173,10 @@ Route::group(['prefix'=>'admin'],function(){
         Route::get('/back', function () {
             return redirect()->route('order.list');
         })->name('order.back');
+	});
+    // Contact
+	Route::group(['prefix'=>'contact'],function(){
+        Route::get('list',['uses'=>'ContactController@index','as'=>'contact.list']);
 	});
     // Product
 	Route::group(['prefix'=>'product'],function(){

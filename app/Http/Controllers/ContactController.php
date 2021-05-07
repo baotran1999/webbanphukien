@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Customer;
+use App\Contact;
 
-class CustomerController extends Controller
+class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::all();
-        return view('admin.customers.listCustomer',['customers'=>$customers]);
+        $contacts = Contact::all();
+        return view('admin.contacts.listContact',['contacts' => $contacts]);
     }
 
     /**
@@ -36,7 +36,26 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         // Form validation
+         $this->validate($request, [
+            'username' => 'required',
+            'address' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'title' => 'required',
+            'comment' => 'required'
+        ]);
+        //  Store data in database
+        $contact = new Contact([
+            'username' => $request->input('username'),
+            'address' => $request->input('address'),
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
+            'title' => $request->input('title'),
+            'content' => $request->input('comment')
+        ]);
+        $contact->save();
+        return redirect()->back()->with("success","Gửi thành công, chúng tôi sẽ liên hệ lại cho bạn sau.");
     }
 
     /**
@@ -82,29 +101,5 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-     /**
-     * Disable account
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function disable($id)
-    {
-        Customer::where('id',$id)->update(['status' => 0]);
-        return redirect()->back()->with('success','Khóa tài khoản thành công.');
-    }
-
-     /**
-     * Enable account
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function enable($id)
-    {
-        Customer::where('id',$id)->update(['status' => 1]);
-        return redirect()->back()->with('success','Mở tài khoản thành công.');
     }
 }

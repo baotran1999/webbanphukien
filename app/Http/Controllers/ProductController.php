@@ -188,7 +188,7 @@ class ProductController extends Controller
      */
     public function addToCart(Request $request, $id)
     {
-        if(Auth::check()){
+        if(Auth::check() || Session::get('customer') != null){
             $product = Product::find($id);
             $oldCart = Session::has('cart') ? Session::get('cart') : null;
             $cart = new Cart($oldCart);
