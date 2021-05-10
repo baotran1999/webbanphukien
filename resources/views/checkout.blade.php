@@ -136,7 +136,6 @@ span.price {
                   <input type="text" id="ward" name="ward" class="input-form-pay" value="{{ $customer->w_name }}" disabled>
                   <label for="ship"><i class="fas fa-shipping-fast"></i> Đơn vị giao hàng</label>
                   <select name="ship" id="ship" class="form-control">
-                    <option value="">Chọn đơn vị giao hàng</option>
                     @foreach ($ships as $ship)
                         <option value="{{ $ship['id'] }}">{{ $ship['name'] }} - {{ number_format($ship['price'],-3,',',',') }} VND</option>
                     @endforeach

@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         });
         view()->composer('admin.layouts.index',function($view){
             $data = DB::select(
-                'SELECT DATE_FORMAT(o.created_at,"%d/%m/%Y") order_day,SUM(o.total) total_price FROM orders o WHERE o.status = 2 GROUP BY order_day'
+                'SELECT DATE_FORMAT(o.created_at,"%d/%m/%Y") order_day,SUM(o.price) + s.price total_price FROM orders o,ships s WHERE o.status = 2 and s.id = o.ship_id GROUP BY order_day'
             );
             $view->with('data',$data);
         });

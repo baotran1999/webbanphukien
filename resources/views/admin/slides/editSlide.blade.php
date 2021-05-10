@@ -21,6 +21,10 @@
                         <label for="sort-order">Thứ tự hiển thị</label>
                         <input type="text" class="form-control" placeholder="Nhập thứ tự xuất hiện" id="sort-order" name="sort-order" value='{{ $slide['sort_order'] }}'>
                     </div>
+                    <div class="form-group">
+                        <label for="image">Chọn hình ảnh</label>
+                        <input id="image" type="file" name="image" required>
+                    </div>
                     <button type="submit" class="btn btn-primary">Sửa</button>
                     <a href="{{ route('slide.back') }}" type="button" class="btn btn-danger">Quay lại</a>
                   </form>

@@ -92,10 +92,23 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $brand = Brand::find($id);
-        $brand->name = $request->input('brand-name');
-        $brand->save();
-        return redirect()->route('brand.list')->with("success","Sửa thành công");
+        if ($request->hasFile('image')) {
+            //  Let's do everything here
+            if ($request->file('image')->isValid()) {
+                //
+                $validated = $request->validate([
+                    'brand-name' => 'required',
+                    'image' => 'mimes:jpeg,png,webp|max:1014',
+                ]);
+                $extension = $request->image->extension();
+                $request->image->storeAs('/public/images/brands', $validated['brand-name'].".".$extension);
+                $brand = Brand::find($id);
+                $brand->name = $validated['brand-name'];
+                $brand->img_path =  $validated['brand-name'].".".$extension;
+                $brand->save();
+                return redirect()->route('brand.list')->with("success","Sửa thành công");
+            }
+        }
     }
 
     /**

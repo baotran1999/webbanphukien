@@ -69,6 +69,10 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="image">Chọn hình ảnh</label>
+                        <input id="image" type="file" name="image" required>
+                    </div>
                     <button type="submit" class="btn btn-primary">Sửa</button>
                     <a href="{{ route('product.back') }}" type="button" class="btn btn-danger">Quay lại</a>
                   </form>

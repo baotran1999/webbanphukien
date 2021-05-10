@@ -17,6 +17,10 @@
                         <label for="brand-name">Tên danh mục:</label>
                         <input type="text" class="form-control" placeholder="Nhập tên thương hiệu" id="brand-name" name="brand-name" value='{{ $brand['name'] }}' required>
                     </div>
+                    <div class="form-group">
+                        <label for="image">Chọn hình ảnh</label>
+                        <input id="image" type="file" name="image" required>
+                    </div>
                     <button type="submit" class="btn btn-primary">Sửa</button>
                     <a href="{{ route('brand.back') }}" type="button" class="btn btn-danger">Quay lại</a>
                   </form>

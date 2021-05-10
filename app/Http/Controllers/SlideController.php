@@ -90,11 +90,25 @@ class SlideController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $slide = Slide::find($id);
-        $slide->name = $request->input('slide-name');
-        $slide->sort_order = $request->input('sort-order'); 
-        $slide->save();
-        return redirect()->route('slide.list')->with("success","Sửa thành công");
+        if ($request->hasFile('image')) {
+            //  Let's do everything here
+            if ($request->file('image')->isValid()) {
+                //
+                $validated = $request->validate([
+                    'slide-name' => 'required',
+                    'sort-order' => 'required',
+                    'image' => 'mimes:jpeg,png,webp|max:1014',
+                ]);
+                $extension = $request->image->extension();
+                $request->image->storeAs('/public/images/slides', $validated['slide-name'].".".$extension);
+                $slide = Slide::find($id);
+                $slide->name = $validated['slide-name'];
+                $slide->sort_order = $validated['sort-order']; 
+                $slide->image_path =  $validated['slide-name'].".".$extension;
+                $slide->save();
+                return redirect()->route('slide.list')->with("success","Sửa thành công");
+            }
+        }
     }
 
     /**

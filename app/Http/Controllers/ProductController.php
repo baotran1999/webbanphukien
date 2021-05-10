@@ -124,18 +124,37 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $product = Product::find($id);
-        $product->title = $request->input('title');
-        $product->price = $request->input('price');
-        $product->category_id = $request->input('category_id');
-        $product->producer_id = $request->input('producer_id');
-        $product->brand_id = $request->input('brand_id');
-        $product->description = $request->input('content');
-        $product->quantity = $request->input('quantity');
-        $product->sku = $request->input('sku');
-        $product->save();
-        return redirect()->route('product.list')->with("success","Sửa thành công");
+        if ($request->hasFile('image')) {
+            //  Let's do everything here
+            if ($request->file('image')->isValid()) {
+                //
+                $validated = $request->validate([
+                    'title' => 'required',
+                    'price' => 'required',
+                    'content' => 'required',
+                    'category_id' => 'required',
+                    'producer_id' => 'required',
+                    'brand_id' => 'required',
+                    'image' => 'mimes:jpeg,png,webp|max:1014',
+                    'quantity' => 'required',
+                    'sku' => 'required'
+                ]);
+                $extension = $request->image->extension();
+                $request->image->storeAs('/public/images/products', $validated['title'].".".$extension);
+                $product = Product::find($id);
+                $product->title =$validated['title'];
+                $product->price = $validated['price'];
+                $product->category_id = $validated['category_id'];
+                $product->image_path =  $validated['title'].".".$extension;
+                $product->producer_id = $validated['producer_id'];
+                $product->brand_id = $validated['brand_id'];
+                $product->description = $validated['content'];
+                $product->quantity = $validated['quantity'];
+                $product->sku = $validated['sku'];
+                $product->save();
+                return redirect()->route('product.list')->with("success","Sửa thành công");
+            }
+        }  
     }
 
     /**
