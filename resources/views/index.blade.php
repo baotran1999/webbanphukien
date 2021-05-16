@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="row banner-container">
-        <div class="col-lg-9">
+        <div class="col-lg-12 mt-3">
             <div id="banner" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ul class="carousel-indicators">
@@ -43,7 +43,7 @@
                 </a>
             </div>
         </div>
-        <div class="col-lg-3">
+        {{-- <div class="col-lg-3">
             <div class="box-banner">
                 <div class="banners">
                     @foreach ($specialBrand as $brand)
@@ -53,7 +53,7 @@
                     @endforeach
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     <div class="banners-2 row mt-4 mb-4">
         @foreach ($brands as $brand)
