@@ -9,6 +9,12 @@
                 <h1 class="page-header">Danh mục sản phẩm
                     <small>Thêm</small>
                 </h1>
+                @if(Session::has('invalid'))
+                    <div class="alert alert-danger alert-dismissible">
+                         <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                         {{Session::get('invalid')}}
+                    </div>
+               @endif
                 <form action="{{ route('category.add') }}" method="POST" enctype="multipart/form-data">
 
                     @csrf

@@ -79,7 +79,71 @@
                 <div class="content-describe mb-5 text-justify">
                     {!! $product['description'] !!}
                 </div>
-
+                <div class="heading-lg mb-2">
+                    <h1>HỎI VÀ ĐÁP</h1>
+                </div>
+                @if (Session::has('customer'))
+                    <form method="POST" action="{{ route('add.comment') }}" class="mt-3">
+                        @csrf
+                        <div class="form-group">
+                            <input type="hidden" name="customer_id" value="{{ Session::has('customer') ? Session::get('customer')->id : '' }}" />
+                            <input type="hidden" name="product_id" value="{{ $product['id'] }}" />
+                            <textarea class="form-control" rows="5" id="content" name="content" placeholder="Accessories Store sẽ trả lời bạn từ 8h - 17h hằng ngày." required></textarea>
+                            <button type="submit" name="submit" class="btn btn-danger mt-2">Gửi</button>
+                        </div>
+                    </form>
+                @else
+                <div class="mt-3 mb-3">
+                    Vui lòng đăng nhập để có thể bình luận và phản hồi
+                </div>  
+                @endif
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="post-content">
+                                @foreach ($comments as $row)
+                                    <div class="post-container">
+                                        <img src="{{asset('assets/img/user/user.png')}}" alt="user" class="profile-photo-md pull-left">
+                                        <div class="post-detail">
+                                            <div class="user-info">
+                                            <h5><div class="profile-link">{{ $row->username }}</div></h5>
+                                            <p class="text-muted">Đăng lúc {{ $row->created_at }}</p>
+                                            </div>
+                                            <div class="line-divider"></div>
+                                            <div class="post-text">
+                                            <p>{{ $row->content }}<i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
+                                            </div>
+                                            @if (Session::has('customer'))
+                                            <a style="cursor: pointer; color:palevioletred;font-size:0.7rem;" cid="{{ $row->id }}" name_a="{{ Session::get('customer')->username }}" token="{{ csrf_token() }}" class="reply"><i class="fas fa-comment-dots"></i> Phản hồi</a>
+                                            <div class="reply-form">
+                                        
+                                                <!-- Dynamic Reply form -->
+                                                
+                                            </div>
+                                            @endif
+                                            <div class="line-divider"></div>
+                                            @foreach ($replies as $reply)
+                                                @if ($reply->comment_id === $row->id)
+                                                    <div class="post-comment">
+                                                        <img src="{{asset('assets/img/user/user.png')}}" alt="" class="profile-photo-sm">
+                                                        <p><div class="profile-link mr-2">{{ $reply->name }}</div><i class="em em-laughing"></i>{{ $reply->reply_content }}</p>
+                                                    </div>
+                                                    @if (Session::has('customer'))
+                                                    <span class="ml-2"><a style="cursor: pointer; color:palevioletred;font-size:0.7rem;" rid="{{ $row->id }}" rname="{{ Session::get('customer')->username }}" token="{{ csrf_token() }}" class="reply-to-reply"><i class="fas fa-comment-dots"></i> Phản hồi</a></span>
+                                                    <div class="reply-to-reply-form">
+                                        
+                                                        <!-- Dynamic Reply form -->
+                                                        
+                                                    </div>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            {{ $comments->links() }}
+                        </div>
+                    </div>
                 <div class="heading-lg">
                     <h1>SẢN PHẨM HOT</h1>
                 </div>
@@ -109,4 +173,85 @@
         </div>
     </div>
 </div>
+<style>
+    .post-content{
+  background: #f8f8f8;
+  border-radius: 4px;
+  width: 100%;
+  border: 1px solid #f1f2f2;
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.post-content img.post-image, video.post-video, .google-maps{
+  width: 100%;
+  height: auto;
+}
+
+.post-content .google-maps .map{
+  height: 300px;
+}
+
+.post-content .post-container{
+  padding: 20px;
+}
+
+.post-content .post-container .post-detail{
+  margin-left: 65px;
+  position: relative;
+}
+
+.post-content .post-container .post-detail .post-text{
+  line-height: 24px;
+  margin: 0;
+}
+
+.post-content .post-container .post-detail .reaction{
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.post-content .post-container .post-detail .post-comment{
+  display: inline-flex;
+  margin: 10px auto;
+  width: 100%;
+}
+
+.post-content .post-container .post-detail .post-comment img.profile-photo-sm{
+  margin-right: 10px;
+}
+
+.post-content .post-container .post-detail .post-comment .form-control{
+  height: 30px;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  margin: 7px 0;
+  min-width: 0;
+}
+
+img.profile-photo-md {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+img.profile-photo-sm {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.text-green {
+    color: #8dc63f;
+}
+
+.text-red {
+    color: #ef4136;
+}
+.profile-link{
+    color:palevioletred;
+}
+</style>
 @endsection

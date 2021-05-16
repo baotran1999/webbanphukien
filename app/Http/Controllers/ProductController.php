@@ -53,6 +53,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $products = Product::all();
+        foreach($products as $row){
+            if($row['sku'] === $request->input('sku')){
+                return redirect()->route('product.add.form')->with('invalid','Mã sản phẩm đã tồn tại');
+            }
+        }
         if ($request->hasFile('image')) {
             //  Let's do everything here
             if ($request->file('image')->isValid()) {
@@ -96,8 +102,10 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
+        $comments = DB::table('comments')->join('customers', 'customers.id', '=', 'comments.customer_id')->where('comments.product_id','=',$id)->orderBy('comments.created_at','desc')->paginate(2,['comments.*','customers.username'],'comment');
+        $replies = DB::select('select a.*,b.username customer_name from replies a,customers b where a.customer_id = b.id');
         $randomProduct = Product::inRandomOrder()->limit(3)->get();
-        return view('product-detail',['product'=>$product,'randomProduct'=>$randomProduct]);
+        return view('product-detail',['product'=>$product,'randomProduct'=>$randomProduct,'comments'=>$comments,'replies'=>$replies]);
     }
 
     /**

@@ -41,6 +41,12 @@ class CategoryController extends Controller
         $this->validate($request, [
             'category-name' => 'required'
         ]);
+        $categories = Category::all();
+        foreach($categories as $row){
+            if($row['title'] === $request->input('category-name')){
+                return redirect()->route('category.add.form')->with('invalid','Danh mục này đã có trong danh sách');
+            }
+        }
         //  Store data in database
         $category = new Category([
             'title' => $request->input('category-name')

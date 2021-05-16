@@ -9,6 +9,18 @@
                 <h1 class="page-header">Sản phẩm
                     <small>Danh sách</small>
                 </h1>
+                @if(Session::has('invalid'))
+            <div class="alert alert-danger alert-dismissible">
+                 <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                 {{Session::get('invalid')}}
+            </div>
+            @endif
+            @if(Session::has('success'))
+                    <div class="alert alert-success alert-dismissible">
+                        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {{Session::get('success')}}
+                    </div>
+            @endif
             </div>
             <!-- /.col-lg-12 -->
             <table class="table table-striped table-bordered table-hover" id="dataTables-example">
