@@ -80,6 +80,12 @@ Route::post('updatepwd',['uses'=>'AccountController@updatePassword','as'=>'updat
 
 Route::get('addcontact',['uses'=>'ContactController@store','as'=>'add.contact']);
 
+Route::post('addcomment',['uses'=>'CommentController@store','as'=>'add.comment']);
+
+Route::resource('/replies','ReplyController');
+
+Route::get('check',['uses'=>'ProductController@checkSku']);
+
 Route::get('/introduce', function () {
     return view('introduce');
 })->name('introduce');
@@ -100,6 +106,14 @@ Route::get('/products', function () {
 Route::group(['prefix'=>'admin'],function(){
     // Dashboard
 	Route::get('dashboard',['uses'=>'DashboardController@index','as'=>'dashboard']);
+    //Comment
+    Route::group(['prefix'=>'comment'],function(){
+        Route::get('list',['uses'=>'CommentController@index','as'=>'comment.list']);
+        
+        Route::get('edit/{id}',['uses'=>'CommentController@edit','as'=>'comment.edit.form']);
+
+        Route::get('delete/{id}',['uses'=>'CommentController@destroy','as'=>'comment.delete']);
+	});
     // Category
     Route::group(['prefix'=>'category'],function(){
         Route::get('list',['uses'=>'CategoryController@index','as'=>'category.list']);

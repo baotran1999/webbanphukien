@@ -105,8 +105,10 @@ $(document).ready(function () {
               xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             }
         }).done(function(res){
-            var total = (parseInt($('.sum').val()) + parseInt(res.price)).toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
-            $('.total-cart').html("<b>"+total+"</b>");
+            if(Number.isInteger(res)){
+                var total = (parseInt($('.sum').val()) + parseInt(res.price)).toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+                $('.total-cart').html("<b>"+total+"</b>");
+            }
         });
     });
 });

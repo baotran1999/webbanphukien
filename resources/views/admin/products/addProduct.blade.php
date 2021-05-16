@@ -9,10 +9,16 @@
                 <h1 class="page-header">Sản phẩm
                     <small>Thêm</small>
                 </h1>
+                @if(Session::has('invalid'))
+                <div class="alert alert-danger alert-dismissible">
+                     <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                     {{Session::get('invalid')}}
+                </div>
+                @endif
                 <form action="{{ route('product.add') }}" method="POST" enctype="multipart/form-data">
 
                     @csrf
-
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                     <div class="form-group">
                         <label for="title">Tên sản phẩm:</label>
                         <input type="text" class="form-control" placeholder="Nhập tên sản phẩm" id="title" name="title">
@@ -61,7 +67,7 @@
                         <label for="image">Chọn hình ảnh</label>
                         <input id="image" type="file" name="image" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Thêm</button>
+                    <button type="submit" class="btn btn-primary" onclick = "return validateProduct();">Thêm</button>
                   </form>
             </div>
         </div>
