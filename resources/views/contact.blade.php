@@ -13,9 +13,9 @@
         <div class="row mt-4">
             <div class="col-lg-9">
                 <h5>CỬA HÀNG ĐIỆN THOẠI</h5>
-                <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: Hà Nội</p>
-                <p><i class="fas fa-phone-alt"></i> Điện thoại: (08) 89 810 3236</p>
-                <p><i class="fas fa-envelope-open"></i> Mail: Nguyen.kv168756@sis.hust.edu.vn</p>
+                <p><i class="fas fa-map-marker-alt"></i> Địa chỉ: Vĩnh Long </p>
+                <p><i class="fas fa-phone-alt"></i> Điện thoại: 0335770209/ 0825819979 </p>
+                <p><i class="fas fa-envelope-open"></i> Mail: 17004199@student.vlute.edu.vn </p>
             </div>
         </div>
         <hr />
@@ -78,7 +78,7 @@
     </div>
     <div class="col-lg-3">
         <h5 class="mt-4"><span>HỖ TRỢ TRỰC TUYẾN</span></h5>
-        <p>Hotline: (08) 89 810 3236</p>
+        <p>Hotline: 0335770209 </p>
     </div>
 </div>
 @endsection
